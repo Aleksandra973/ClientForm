@@ -1,0 +1,51 @@
+@import "reset"
+
+.form
+  width: 860px
+
+.form__group
+  label
+    display: flex
+
+.form__control
+  width: 100%
+  max-width: 380px
+  padding: 12px 20px
+  margin: 8px 0
+  display: inline-block
+  border: 1px solid #ccc
+  border-radius: 4px
+  box-sizing: border-box
+
+
+.container
+  display: flex
+  justify-content: center
+  max-width: 860px
+  margin: 0 auto
+
+.form-block
+  background-color: #f2f2f2
+  padding: 25px
+  margin-bottom: 30px
+  border-radius: 5px
+
+body
+  min-width: 200px
+
+.btn-success
+  color: #fff
+  background-color: #28a745
+  border-color: #28a745
+  &:hover
+    color: #fff
+    background-color: #218838
+    border-color: #1e7e34 !important
+    cursor: pointer
+  &:focus
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5)
+    outline: none
+
+.error
+  border-color: red
+
