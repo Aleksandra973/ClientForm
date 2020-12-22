@@ -3,20 +3,40 @@
 .form
   width: 860px
 
-.form__group
+.form-group
   label
     display: flex
+  &__error
+    color: red
+    input
+      border-color: red
+      &:focus
+        outline-color: red
 
 .form__control
   width: 100%
   max-width: 380px
   padding: 12px 20px
-  margin: 8px 0
+  margin: 8px 0 20px
   display: inline-block
   border: 1px solid #ccc
   border-radius: 4px
   box-sizing: border-box
+  font-family: sans-serif
 
+.form__checkbox
+  margin: 8px 0 20px
+
+label.required:after
+  color: red
+  content: " *"
+
+p.required:after
+  color: red
+  content: " *"
+
+.label
+  margin-bottom: 8px
 
 .container
   display: flex
@@ -47,5 +67,35 @@ body
     outline: none
 
 .error
-  border-color: red
+  margin-top: -20px
+  margin-bottom: 20px
+  font-size: small
+
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked
+  visibility: hidden
+
+
+[type="checkbox"] + label
+  position: relative
+
+
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before
+  position: absolute
+  content: ''
+  width: 15px
+  height: 15px
+  left: -22px
+  border: solid 2px #28a745
+
+
+[type="checkbox"]:checked + label:after
+  content: '\2713\0020'
+  color: black
+  left: -17px
+  top: -2px
+  position: absolute
+
+
 
