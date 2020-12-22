@@ -40,11 +40,6 @@
         <div class="form__checkbox">
           <p class="label">Пол</p>
           <label class="radio radio-gradient">
-          <span class="radio__input">
-            <input type="radio" name="radio">
-            <span class="radio__control"></span>
-          </span>
-            <span class="radio__label">Radio 1 - radial-gradient</span>
           </label>
           <label  for="male">м</label>
           <input type="radio" id="male" name="male" value="male" v-model="sex">
