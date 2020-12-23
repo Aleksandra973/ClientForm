@@ -1,7 +1,8 @@
 <template>
   <div class="form">
-    <form>
-      <div class="form-block">
+    <form @submit.prevent="submit">
+      <fieldset class="form-block">
+        <legend>Контактная информация</legend>
         <div class="form-group" :class="{ 'form-group__error': $v.lastName.$error }">
           <label class="required" for="lastName">Фамилия</label>
           <input class="form__control" id="lastName" name="lastName" v-model="$v.lastName.$model"/>
@@ -39,16 +40,13 @@
         </div>
         <div class="form__checkbox">
           <p class="label">Пол</p>
-          <label class="radio radio-gradient">
-          </label>
-          <label  for="male">м</label>
           <input type="radio" id="male" name="male" value="male" v-model="sex">
-          <label for="female">ж</label>
+          <label  for="male">М</label>
           <input  type="radio" id="female" name="female" value="female" v-model="sex">
+          <label for="female">Ж</label>
         </div>
         <div class="form__checkbox">
           <p class="required label">Группа клиентов</p>
-
           <input type="checkbox" id="vip" name="vip" value="VIP" v-model="clientGroup">
           <label  for="vip">VIP</label>
           <input  type="checkbox" id="problem" name="problem" value="Проблемные" v-model="clientGroup">
@@ -65,11 +63,12 @@
           </select>
         </div>
         <div>
-          <label for="sms">Не отправлять смс</label>
           <input type="checkbox" id="sms" name="sms" v-model="sendSms">
+          <label for="sms">Не отправлять смс</label>
         </div>
-      </div>
-      <div class="form-block">
+      </fieldset>
+      <fieldset class="form-block">
+        <legend>Адрес</legend>
         <div class="form-group">
           <label for="index">Индекс</label>
           <input class="form__control" id="index" name="index" v-model="index">
@@ -82,9 +81,12 @@
           <label for="region">Область</label>
           <input class="form__control" id="region" name="region" v-model="region">
         </div>
-        <div class="form-group">
+        <div class="form-group" :class="{ 'form-group__error': $v.city.$error }">
           <label class="required" for="city">Город</label>
-          <input class="form__control" id="city" name="city" v-model="city">
+          <input class="form__control" id="city" name="city" v-model="$v.city.$model">
+          <p class="error" v-if="!$v.city.required && $v.city.$dirty">
+            <span>Пожалуйста, заполните данное поле</span>
+          </p>
         </div>
         <div class="form-group">
           <label for="street">Улица</label>
@@ -94,15 +96,19 @@
           <label for="house">Дом</label>
           <input class="form__control" id="house" name="house" v-model="house">
         </div>
-      </div>
-      <div class="form-block">
-        <div class="form-group">
+      </fieldset>
+      <fieldset class="form-block">
+        <legend>Документ, подтверждающий личность</legend>
+        <div class="form-group" :class="{ 'form-group__error': $v.documentType.$error }">
           <label class="required" for="documentType">Тип документа</label>
-          <select class="form__control" name="documentType" id="documentType" v-model="documentType">
+          <select class="form__control" name="documentType" id="documentType" v-model="$v.documentType.$model">
             <option value="passport">Паспорт</option>
             <option value="birthCertificate">Свидетельство о рождении</option>
             <option value="driverLicense">Водительское удостоверение</option>
           </select>
+          <p class="error" v-if="!$v.documentType.required && $v.documentType.$dirty">
+            <span>Пожалуйста, заполните данное поле</span>
+          </p>
         </div>
         <div class="form-group">
           <label for="serial">Серия</label>
@@ -116,13 +122,19 @@
           <label for="authority">Кем выдан</label>
           <input class="form__control" id="authority" name="authority" v-model="authority">
         </div>
-        <div class="form-group">
+        <div class="form-group" :class="{ 'form-group__error': $v.issueDate.$error }">
           <label class="required" for="issueDate">Дата выдачи</label>
-          <input class="form__control" id="issueDate" name="issueDate" v-model="issueDate">
+          <input type="date" class="form__control" id="issueDate" name="issueDate" v-model="$v.issueDate.$model">
+          <p class="error" v-if="!$v.issueDate.required && $v.issueDate.$dirty">
+            <span>Пожалуйста, заполните данное поле</span>
+          </p>
         </div>
-
-        <button type="button" class="form__control btn-success">Отправить</button>
-      </div>
+      </fieldset>
+      <p class="required">Обязательное поле для заполнения</p>
+      <button type="submit" class="form__control btn-success" :disabled="submitStatus === 'PENDING'">Отправить</button>
+      <p class="typo" v-if="submitStatus === 'OK'">Новый клиент успешно создан!</p>
+      <p class="typo" v-if="submitStatus === 'ERROR'">Пожалуйста, заполните корректно форму</p>
+      <p class="typo" v-if="submitStatus === 'PENDING'">Отправка...</p>
     </form>
   </div>
 </template>
@@ -153,9 +165,27 @@ export default {
       serial: null,
       number: null,
       authority: '',
-      issueDate: ''
+      issueDate: '',
+      submitStatus: null
     }
   },
+
+  methods: {
+    submit() {
+      console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.submitStatus = 'ERROR'
+      } else {
+        // do your submit logic here
+        this.submitStatus = 'PENDING'
+        setTimeout(() => {
+          this.submitStatus = 'OK'
+        }, 500)
+      }
+    }
+  },
+
   validations: {
     lastName: {
       required
@@ -169,6 +199,15 @@ export default {
     phoneNumber: {
       required,
       validFormat: val =>  /^\+?7(\d{10})$/.test(val)
+    },
+    city: {
+      required
+    },
+    documentType: {
+      required
+    },
+    issueDate: {
+      required
     }
   },
 

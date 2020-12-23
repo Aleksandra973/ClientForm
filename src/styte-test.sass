@@ -2,6 +2,19 @@
 
 .form
   width: 860px
+  margin-top: 30px
+  &__control
+    width: 100%
+    max-width: 380px
+    padding: 12px 20px
+    margin: 8px 0 20px
+    display: inline-block
+    border: 1px solid #ccc
+    border-radius: 4px
+    box-sizing: border-box
+    font-family: sans-serif
+  &__checkbox
+    margin: 8px 0 20px
 
 .form-group
   label
@@ -13,27 +26,15 @@
       &:focus
         outline-color: red
 
-.form__control
-  width: 100%
-  max-width: 380px
-  padding: 12px 20px
-  margin: 8px 0 20px
-  display: inline-block
-  border: 1px solid #ccc
-  border-radius: 4px
-  box-sizing: border-box
-  font-family: sans-serif
-
-.form__checkbox
-  margin: 8px 0 20px
 
 label.required:after
   color: red
   content: " *"
 
-p.required:after
+p.required:before
   color: red
   content: " *"
+
 
 .label
   margin-bottom: 8px
@@ -49,6 +50,8 @@ p.required:after
   padding: 25px
   margin-bottom: 30px
   border-radius: 5px
+  legend
+    font-size: x  -large
 
 body
   min-width: 200px
@@ -57,6 +60,7 @@ body
   color: #fff
   background-color: #28a745
   border-color: #28a745
+  margin-top: 20px
   &:hover
     color: #fff
     background-color: #218838
@@ -78,6 +82,7 @@ body
 
 [type="checkbox"] + label
   position: relative
+  margin-right: 5px
 
 
 [type="checkbox"]:not(:checked) + label:before,
@@ -92,10 +97,56 @@ body
 
 [type="checkbox"]:checked + label:after
   content: '\2713\0020'
-  color: black
-  left: -17px
-  top: -2px
+  color: #28a745
+  left: -22px
+  top: -3px
   position: absolute
+  font-size: x-large
 
+input[type='radio'],label
+  cursor: pointer
+
+
+input[type='radio'] 
+  position: relative
+  height: 22px
+  width: 22px
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  outline: none
+
+input[type='radio'] + label
+  position: relative
+  top: -5px
+  left: -11px
+
+input[type='radio']::before 
+  content: ''
+  position: absolute
+  top: 50%
+  left: 20%
+  width: 18px
+  height: 18px
+  border-radius: 50%
+  transform: translate(-50%, -50%)
+  background-color: white
+  border: 2px solid #28a745
+
+
+input[type='radio']:checked::after 
+  content: ''
+  position: absolute
+  top: 50%
+  left: 20%
+  width: 12px
+  height: 12px
+  border-radius: 50%
+  background-color: #28a745
+  transform: translate(-50%, -50%)
+  visibility: visible
+
+.typo
+  margin-bottom: 20px
 
 
