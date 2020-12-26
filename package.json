@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "webpack",
-    "serve": "webpack serve"
+    "serve": "webpack serve --mode development"
   },
   "dependencies": {
     "vue": "^2.6.12",

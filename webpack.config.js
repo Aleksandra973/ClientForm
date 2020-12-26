@@ -44,8 +44,5 @@ module.exports = {
             template: __dirname + "/public/index.html",
             inject: 'body'
         }),
-        new VueLoaderPlugin(),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        })]
+        new VueLoaderPlugin()]
 };
